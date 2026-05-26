@@ -1,0 +1,165 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, sans-serif;
+  background: #0f172a;
+  color: #e2e8f0;
+  min-height: 100vh;
+}
+
+.app {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+  border-bottom: 1px solid #1e293b;
+  padding-bottom: 16px;
+}
+
+header h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #f8fafc;
+}
+
+.panel {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.panel h2 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 14px;
+}
+
+.panel h2 small {
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 14px;
+}
+
+.cmd-row {
+  display: flex;
+  gap: 8px;
+}
+
+.cmd-row input {
+  flex: 1;
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  color: #e2e8f0;
+  font-family: monospace;
+  font-size: 14px;
+  padding: 8px 12px;
+  outline: none;
+}
+
+.cmd-row input:focus {
+  border-color: #6366f1;
+}
+
+.cmd-row button {
+  background: #6366f1;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 18px;
+  transition: background 0.15s;
+}
+
+.cmd-row button:hover:not(:disabled) {
+  background: #4f46e5;
+}
+
+.cmd-row button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+pre.result {
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  color: #a5f3fc;
+  font-size: 12px;
+  margin-top: 12px;
+  max-height: 360px;
+  overflow: auto;
+  padding: 12px;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.muted {
+  color: #475569;
+  font-size: 14px;
+}
+
+.event-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.event-list li {
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+
+.event-list li strong {
+  color: #818cf8;
+  font-size: 13px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.event-list li pre {
+  color: #94a3b8;
+  font-size: 11px;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.error-msg {
+  background: #450a0a;
+  border: 1px solid #991b1b;
+  border-radius: 8px;
+  color: #fca5a5;
+  font-size: 14px;
+  line-height: 1.6;
+  padding: 16px;
+}
+
+.error-msg code {
+  background: #7f1d1d;
+  border-radius: 3px;
+  font-family: monospace;
+  padding: 1px 5px;
+}
