@@ -1,13 +1,13 @@
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import { MdsProvider } from "./MdsContext.jsx";
-import App from "./App.jsx";
-import "./index.css";
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { ApiProvider } from './ApiContext.jsx';
+import App from './App.jsx';
+import './index.css';
 
-createRoot(document.getElementById("root")).render(
+createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <MdsProvider>
+    <ApiProvider>
       <App />
-    </MdsProvider>
+    </ApiProvider>
   </StrictMode>
 );

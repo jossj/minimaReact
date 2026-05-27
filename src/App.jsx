@@ -1,114 +1,80 @@
-import { useState } from "react";
-import { useMds } from "./MdsContext";
-import "./App.css";
+import { useState } from 'react';
+import { useApi } from './ApiContext';
+import NodePanel from './components/NodePanel';
+import WalletPanel from './components/WalletPanel';
+import TokenPanel from './components/TokenPanel';
+import TransactionPanel from './components/TransactionPanel';
+import MaximaPanel from './components/MaximaPanel';
+import ScriptPanel from './components/ScriptPanel';
+import WebhookPanel from './components/WebhookPanel';
+import ProductPanel from './components/ProductPanel';
+import RawPanel from './components/RawPanel';
+import './App.css';
 
-function StatusBadge({ status }) {
-  const colours = {
-    connecting: "#f59e0b",
-    ready: "#10b981",
-    error: "#ef4444",
-  };
-  return (
-    <span
-      style={{
-        display: "inline-block",
-        padding: "2px 10px",
-        borderRadius: 999,
-        background: colours[status] ?? "#6b7280",
-        color: "#fff",
-        fontSize: 13,
-        fontWeight: 600,
-      }}
-    >
-      {status}
-    </span>
-  );
-}
-
-function CommandPanel() {
-  const { cmd } = useMds();
-  const [input, setInput] = useState("status");
-  const [result, setResult] = useState(null);
-  const [loading, setLoading] = useState(false);
-
-  async function run() {
-    setLoading(true);
-    setResult(null);
-    try {
-      const res = await cmd(input);
-      setResult(res);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  return (
-    <section className="panel">
-      <h2>Run Command</h2>
-      <div className="cmd-row">
-        <input
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && run()}
-          placeholder="e.g. status"
-          spellCheck={false}
-        />
-        <button onClick={run} disabled={loading}>
-          {loading ? "Running…" : "Run"}
-        </button>
-      </div>
-      {result && (
-        <pre className="result">{JSON.stringify(result, null, 2)}</pre>
-      )}
-    </section>
-  );
-}
-
-function EventLog() {
-  const { events } = useMds();
-
-  return (
-    <section className="panel">
-      <h2>
-        Event Log <small>({events.length})</small>
-      </h2>
-      {events.length === 0 && <p className="muted">No events yet…</p>}
-      <ul className="event-list">
-        {events.map((e, i) => (
-          <li key={i}>
-            <strong>{e.event}</strong>
-            <pre>{JSON.stringify(e, null, 2)}</pre>
-          </li>
-        ))}
-      </ul>
-    </section>
-  );
-}
+const TABS = [
+  { id: 'node',         label: 'Node'         },
+  { id: 'wallet',       label: 'Wallet'       },
+  { id: 'tokens',       label: 'Tokens'       },
+  { id: 'transactions', label: 'Transactions' },
+  { id: 'maxima',       label: 'Maxima'       },
+  { id: 'scripts',      label: 'Scripts'      },
+  { id: 'webhooks',     label: 'Webhooks'     },
+  { id: 'products',     label: 'Products'     },
+  { id: 'raw',          label: 'Raw CMD'      },
+];
 
 export default function App() {
-  const { status } = useMds();
+  const { nodeReady, backendReachable } = useApi();
+  const [tab, setTab] = useState('node');
 
   return (
     <div className="app">
-      <header>
-        <h1>MiniDAPP</h1>
-        <StatusBadge status={status} />
+      <header className="app-header">
+        <h1>Minima Dashboard</h1>
+        <div className="status-badges">
+          <StatusBadge label="Backend" ok={backendReachable} />
+          <StatusBadge label="Node" ok={nodeReady} />
+        </div>
       </header>
 
-      {status === "error" && (
-        <p className="error-msg">
-          MDS library not found. Make sure you are running inside Minima MDS or
-          set <code>MDS.DEBUG_HOST</code> / <code>MDS.DEBUG_PORT</code> before
-          calling <code>MDS.init()</code>.
-        </p>
+      {!backendReachable && (
+        <div className="banner">
+          Cannot reach backend. Make sure minimaBackend is running on port 8080.
+        </div>
       )}
 
-      {status !== "error" && (
-        <>
-          <CommandPanel />
-          <EventLog />
-        </>
-      )}
+      <nav className="tab-nav">
+        {TABS.map(t => (
+          <button
+            key={t.id}
+            className={`tab-btn${tab === t.id ? ' active' : ''}`}
+            onClick={() => setTab(t.id)}
+          >
+            {t.label}
+          </button>
+        ))}
+      </nav>
+
+      <main className="app-main">
+        {tab === 'node'         && <NodePanel />}
+        {tab === 'wallet'       && <WalletPanel />}
+        {tab === 'tokens'       && <TokenPanel />}
+        {tab === 'transactions' && <TransactionPanel />}
+        {tab === 'maxima'       && <MaximaPanel />}
+        {tab === 'scripts'      && <ScriptPanel />}
+        {tab === 'webhooks'     && <WebhookPanel />}
+        {tab === 'products'     && <ProductPanel />}
+        {tab === 'raw'          && <RawPanel />}
+      </main>
     </div>
+  );
+}
+
+function StatusBadge({ label, ok }) {
+  return (
+    <span className={`status-badge${ok ? ' ok' : ' err'}`}>
+      <span className="dot" />
+      {label}
+    </span>
   );
 }
