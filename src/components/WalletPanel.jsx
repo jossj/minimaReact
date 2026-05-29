@@ -14,38 +14,70 @@ export default function WalletPanel() {
   );
 }
 
+// Minima stores custom token names as objects e.g. {name:'redToken'}.
+// The balance response may use `name` instead of `token`, and `total`
+// instead of `confirmed`/`unconfirmed`/`sendable` depending on version.
+function tokenLabel(b) {
+  const raw = b.token ?? b.name;
+  if (raw == null) return b.tokenid ? `${b.tokenid.slice(0, 14)}…` : 'Unknown';
+  if (typeof raw === 'string') return raw;
+  // object e.g. {name:'redToken', description:'...'}
+  return raw.name ?? raw.description ?? JSON.stringify(raw);
+}
+
 function BalanceCard() {
   const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
   useEffect(() => { load(); }, []);
+
   async function load() {
+    setLoading(true);
+    setError(null);
     try { setData(await getBalance()); }
     catch (e) { setError(e.message); }
+    finally { setLoading(false); }
   }
+
+  const hasBalanceFields = Array.isArray(data) && data.length > 0 && data[0].confirmed != null;
+
   return (
     <div className="panel">
       <div className="panel-header">
         <h2>Balance</h2>
-        <button className="btn-sm" onClick={load}>Refresh</button>
+        <button className="btn-sm" onClick={load} disabled={loading}>{loading ? '…' : 'Refresh'}</button>
       </div>
       {error && <p className="err-text">{error}</p>}
-      {Array.isArray(data) ? (
+      {loading && !data && <p className="muted">Loading…</p>}
+      {Array.isArray(data) && data.length === 0 && <p className="muted">No balance data</p>}
+      {Array.isArray(data) && data.length > 0 && (
         <table className="data-table">
           <thead>
-            <tr><th>Token</th><th>Confirmed</th><th>Unconfirmed</th><th>Sendable</th></tr>
+            <tr>
+              <th>Token</th>
+              {hasBalanceFields ? (
+                <><th>Confirmed</th><th>Unconfirmed</th><th>Sendable</th></>
+              ) : (
+                <th>Total</th>
+              )}
+            </tr>
           </thead>
           <tbody>
             {data.map((b, i) => (
               <tr key={i}>
-                <td title={b.tokenid}>{b.token ?? (b.tokenid?.slice(0, 12) + '…')}</td>
-                <td>{b.confirmed}</td>
-                <td>{b.unconfirmed}</td>
-                <td>{b.sendable}</td>
+                <td title={b.tokenid}>{tokenLabel(b)}</td>
+                {hasBalanceFields ? (
+                  <><td>{b.confirmed}</td><td>{b.unconfirmed}</td><td>{b.sendable}</td></>
+                ) : (
+                  <td>{b.total ?? '—'}</td>
+                )}
               </tr>
             ))}
           </tbody>
         </table>
-      ) : data && <JsonView data={data} />}
+      )}
+      {data && !Array.isArray(data) && <JsonView data={data} />}
     </div>
   );
 }
