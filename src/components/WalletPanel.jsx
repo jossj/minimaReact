@@ -5,11 +5,46 @@ import JsonView from './JsonView';
 export default function WalletPanel() {
   return (
     <div className="panel-grid">
+      <WalletSummary />
       <BalanceCard />
       <AddressCard />
       <CoinsCard />
       <HistoryCard />
       <SendCard />
+    </div>
+  );
+}
+
+function WalletSummary() {
+  const [tokenCount, setTokenCount] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => { load(); }, []);
+
+  async function load() {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await getBalance();
+      setTokenCount(Array.isArray(data) ? data.length : null);
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <div className="panel">
+      <div className="panel-header">
+        <h2>Wallet Summary</h2>
+        <button className="btn-sm" onClick={load} disabled={loading}>{loading ? '…' : 'Refresh'}</button>
+      </div>
+      {error && <p className="err-text">{error}</p>}
+      {tokenCount !== null && (
+        <p><strong>Token types in wallet:</strong> {tokenCount}</p>
+      )}
     </div>
   );
 }
