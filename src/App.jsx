@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import { useApi } from './ApiContext';
+import { useAuth } from './AuthContext';
+import AuthScreen from './components/AuthScreen';
+import WalletSummary from './components/WalletSummary';
 import NodePanel from './components/NodePanel';
 import WalletPanel from './components/WalletPanel';
 import TokenPanel from './components/TokenPanel';
@@ -25,7 +28,10 @@ const TABS = [
 
 export default function App() {
   const { nodeReady, backendReachable } = useApi();
+  const { user } = useAuth();
   const [tab, setTab] = useState('node');
+
+  if (!user) return <AuthScreen />;
 
   return (
     <div className="app">
@@ -42,6 +48,8 @@ export default function App() {
           Cannot reach backend. Make sure minimaBackend is running on port 8080.
         </div>
       )}
+
+      <WalletSummary />
 
       <nav className="tab-nav">
         {TABS.map(t => (
