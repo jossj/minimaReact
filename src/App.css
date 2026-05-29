@@ -316,3 +316,271 @@ input:focus, textarea:focus { border-color: #6366f1; }
   color: #475569;
   font-size: 13px;
 }
+
+/* ── Auth page ─────────────────────────────────────────────────────────── */
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0f172a;
+  padding: 24px;
+}
+
+.auth-card {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 14px;
+  padding: 36px 32px 32px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.auth-logo {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.auth-logo-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  background: #6366f1;
+  border-radius: 14px;
+  font-size: 26px;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 14px;
+}
+
+.auth-logo h1 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #f8fafc;
+  margin-bottom: 4px;
+}
+
+.auth-tagline {
+  font-size: 13px;
+  color: #475569;
+}
+
+.auth-tabs {
+  display: flex;
+  background: #0f172a;
+  border-radius: 8px;
+  padding: 3px;
+  margin-bottom: 24px;
+  gap: 3px;
+}
+
+.auth-tab {
+  flex: 1;
+  background: none;
+  border: none;
+  border-radius: 6px;
+  color: #64748b;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 7px 0;
+  transition: background 0.15s, color 0.15s;
+}
+
+.auth-tab:hover { color: #94a3b8; }
+
+.auth-tab.active {
+  background: #1e293b;
+  color: #f8fafc;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.auth-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.auth-submit {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.auth-error {
+  color: #f87171;
+  font-size: 13px;
+  background: #450a0a;
+  border: 1px solid #7f1d1d;
+  border-radius: 6px;
+  padding: 8px 12px;
+}
+
+/* ── Header right side ──────────────────────────────────────────────────── */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.user-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 999px;
+  padding: 4px 6px 4px 12px;
+}
+
+.user-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #94a3b8;
+}
+
+.btn-logout {
+  background: #334155;
+  border-radius: 999px;
+  font-size: 11px;
+  padding: 4px 10px;
+}
+
+/* ── Wallet summary bar ─────────────────────────────────────────────────── */
+.wallet-summary {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 10px;
+  margin: 16px 0 0;
+  padding: 14px 18px;
+}
+
+.ws-inner {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.ws-loading {
+  display: block;
+  padding: 4px 0;
+}
+
+.ws-error {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ws-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 4px;
+}
+
+.ws-address-block {
+  min-width: 0;
+  flex: 1 1 200px;
+}
+
+.ws-address {
+  display: block;
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 12px;
+  color: #7dd3fc;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 420px;
+  cursor: default;
+}
+
+.ws-divider {
+  width: 1px;
+  align-self: stretch;
+  background: #334155;
+  flex-shrink: 0;
+}
+
+.ws-tokens-block {
+  flex: 1 1 200px;
+}
+
+.ws-token-stats {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.ws-stat {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.ws-stat-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: #f8fafc;
+  line-height: 1;
+}
+
+.ws-stat-label {
+  font-size: 11px;
+  color: #64748b;
+}
+
+.ws-token-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.ws-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 999px;
+  font-size: 11px;
+  color: #94a3b8;
+  padding: 3px 8px 3px 10px;
+  cursor: default;
+}
+
+.ws-chip-count {
+  background: #334155;
+  border-radius: 999px;
+  color: #7dd3fc;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 6px;
+}
+
+.ws-no-tokens {
+  display: block;
+  font-size: 12px;
+}
+
+.ws-refresh {
+  align-self: flex-start;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
