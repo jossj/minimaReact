@@ -9,6 +9,7 @@ import ScriptPanel from './components/ScriptPanel';
 import WebhookPanel from './components/WebhookPanel';
 import ProductPanel from './components/ProductPanel';
 import RawPanel from './components/RawPanel';
+import AddressTokenPanel from './components/AddressTokenPanel';
 import './App.css';
 
 const TABS = [
@@ -21,6 +22,7 @@ const TABS = [
   { id: 'webhooks',     label: 'Webhooks'     },
   { id: 'products',     label: 'Products'     },
   { id: 'raw',          label: 'Raw CMD'      },
+  { id: 'addr-token',   label: 'Addr Lookup'  },
 ];
 
 export default function App() {
@@ -65,6 +67,7 @@ export default function App() {
         {tab === 'webhooks'     && <WebhookPanel />}
         {tab === 'products'     && <ProductPanel />}
         {tab === 'raw'          && <RawPanel />}
+        {tab === 'addr-token'   && <AddressTokenPanel />}
       </main>
     </div>
   );
